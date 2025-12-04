@@ -13,6 +13,19 @@ const postFields = /* groq */ `
   "author": author->{firstName, lastName, picture},
 `
 
+const campaignFields = /* groq */ `
+  _id,
+  "status": select(_originalId in path("drafts.**") => "draft", "published"),
+  "title": coalesce(title, "Untitled"),
+  "slug": slug.current,
+  excerpt,
+  mainImage,
+  goalAmount,
+  raisedAmount,
+  "date": coalesce(date, _updatedAt),
+  "organizer": organizer->{firstName, lastName, picture},
+`
+
 const linkReference = /* groq */ `
   _type == "link" => {
     "page": page->slug.current,
@@ -67,6 +80,12 @@ export const allPostsQuery = defineQuery(`
   }
 `)
 
+export const allCampaignsQuery = defineQuery(`
+  *[_type == "campaign" && defined(slug.current)] | order(date desc, _updatedAt desc) {
+    ${campaignFields}
+  }
+`)
+
 export const morePostsQuery = defineQuery(`
   *[_type == "post" && _id != $skip && defined(slug.current)] | order(date desc, _updatedAt desc) [0...$limit] {
     ${postFields}
@@ -86,8 +105,26 @@ export const postQuery = defineQuery(`
   }
 `)
 
+export const campaignQuery = defineQuery(`
+  *[_type == "campaign" && slug.current == $slug] [0] {
+    content[]{
+    ...,
+    markDefs[]{
+      ...,
+      ${linkReference}
+    }
+  },
+    ${campaignFields}
+  }
+`)
+
 export const postPagesSlugs = defineQuery(`
   *[_type == "post" && defined(slug.current)]
+  {"slug": slug.current}
+`)
+
+export const campaignPagesSlugs = defineQuery(`
+  *[_type == "campaign" && defined(slug.current)]
   {"slug": slug.current}
 `)
 
