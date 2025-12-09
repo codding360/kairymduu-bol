@@ -23,6 +23,23 @@ export const settings = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
+      name: 'logo',
+      title: 'Logo',
+      description: 'Site logo displayed in the header',
+      type: 'image',
+      options: {
+        hotspot: true,
+      },
+      fields: [
+        defineField({
+          name: 'alt',
+          title: 'Alternative text',
+          type: 'string',
+          description: 'Important for accessibility',
+        }),
+      ],
+    }),
+    defineField({
       name: 'description',
       description: 'Used on the Homepage',
       title: 'Description',
@@ -112,6 +129,17 @@ export const settings = defineType({
       ],
     }),
     defineField({
+      name: 'whatsappPhone',
+      title: 'WhatsApp Phone Number',
+      type: 'string',
+      description: 'WhatsApp phone number for starting campaigns (e.g., +996700123456)',
+      placeholder: '+996700123456',
+      validation: (rule) => rule.regex(/^\+?[1-9]\d{1,14}$/, {
+        name: 'phone',
+        invert: false,
+      }).warning('Phone number should be in international format (e.g., +996700123456)'),
+    }),
+    defineField({
       name: 'ogImage',
       title: 'Open Graph Image',
       type: 'image',
@@ -150,6 +178,85 @@ export const settings = defineType({
           ),
         }),
       ],
+    }),
+    defineField({
+      name: 'footerHeading',
+      title: 'Footer Heading',
+      type: 'string',
+      description: 'Main heading in the footer',
+      initialValue: 'Кайрымдуу Бол - №1 платформа для сбора средств в Кыргызстане',
+    }),
+    defineField({
+      name: 'footerDescription',
+      title: 'Footer Description',
+      type: 'text',
+      description: 'Optional description in the footer',
+    }),
+    defineField({
+      name: 'footerLinks',
+      title: 'Footer Links',
+      type: 'array',
+      description: 'Links displayed in the footer',
+      of: [
+        defineArrayMember({
+          type: 'object',
+          fields: [
+            defineField({
+              name: 'title',
+              title: 'Link Title',
+              type: 'string',
+              validation: (rule) => rule.required(),
+            }),
+            defineField({
+              name: 'href',
+              title: 'URL',
+              type: 'string',
+              validation: (rule) => rule.required(),
+            }),
+          ],
+          preview: {
+            select: {
+              title: 'title',
+              subtitle: 'href',
+            },
+          },
+        }),
+      ],
+    }),
+    defineField({
+      name: 'socialLinks',
+      title: 'Social Media Links',
+      type: 'object',
+      description: 'Social media links',
+      fields: [
+        defineField({
+          name: 'facebook',
+          title: 'Facebook',
+          type: 'url',
+        }),
+        defineField({
+          name: 'instagram',
+          title: 'Instagram',
+          type: 'url',
+        }),
+        defineField({
+          name: 'twitter',
+          title: 'Twitter/X',
+          type: 'url',
+        }),
+        defineField({
+          name: 'youtube',
+          title: 'YouTube',
+          type: 'url',
+        }),
+      ],
+    }),
+    defineField({
+      name: 'copyrightText',
+      title: 'Copyright Text',
+      type: 'string',
+      description: 'Copyright text displayed in footer',
+      initialValue: '© 2024 Кайрымдуу Бол. Бардык укуктар корголгон.',
     }),
   ],
   preview: {

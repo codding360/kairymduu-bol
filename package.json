@@ -1,18 +1,6 @@
 {
-  "name": "sanity-template-nextjs-clean",
-  "description": "Next.js + Sanity: A Powerful Website Starter with Real-time Visual Editing",
-  "keywords": [
-    "Sanity",
-    "Next.js",
-    "Headless CMS",
-    "Visual Editing",
-    "Live Content API (LCAPI)",
-    "Real-time"
-  ],
-  "homepage": "https://github.com/sanity-io/sanity-template-nextjs-clean#readme",
-  "bugs": {
-    "url": "https://github.com/sanity-io/sanity-template-nextjs-clean/issues"
-  },
+  "name": "kairymduu-bol",
+  "description": "Kairymduu Bol is a platform for crowdfunding campaigns in Kyrgyzstan",
   "workspaces": [
     "studio",
     "frontend"
@@ -31,5 +19,6 @@
     "@sanity/prettier-config": "^2.0.2",
     "npm-run-all2": "^5.0.2",
     "prettier": "^3.7.3"
-  }
+  },
+  "packageManager": "yarn@4.1.1+sha512.ec40d0639bb307441b945d9467139cbb88d14394baac760b52eca038b330d16542d66fef61574271534ace5a200518dabf3b53a85f1f9e4bfa37141b538a9590"
 }

@@ -10,11 +10,11 @@ import {Toaster} from 'sonner'
 import DraftModeToast from '@/app/components/DraftModeToast'
 import Footer from '@/app/components/Footer'
 import Header from '@/app/components/Header'
-import * as demo from '@/sanity/lib/demo'
 import {sanityFetch, SanityLive} from '@/sanity/lib/live'
-import {settingsQuery} from '@/sanity/lib/queries'
+import {pagesQuery, settingsQuery} from '@/sanity/lib/queries'
 import {resolveOpenGraphImage} from '@/sanity/lib/utils'
 import {handleError} from './client-utils'
+import { Page } from '@/sanity.types'
 
 /**
  * Generate metadata for the page.
@@ -26,8 +26,8 @@ export async function generateMetadata(): Promise<Metadata> {
     // Metadata should never contain stega
     stega: false,
   })
-  const title = settings?.title || demo.title
-  const description = settings?.description || demo.description
+  const title = settings?.title || 'Кайрымдуу Бол'
+  const description = settings?.description || 'Кайрымдуу Бол - №1 платформа для сбора средств в Кыргызстане'
 
   const ogImage = resolveOpenGraphImage(settings?.ogImage)
   let metadataBase: URL | undefined = undefined
@@ -44,7 +44,7 @@ export async function generateMetadata(): Promise<Metadata> {
       template: `%s | ${title}`,
       default: title,
     },
-    description: toPlainText(description),
+    description: toPlainText(description as any),
     openGraph: {
       images: ogImage ? [ogImage] : [],
     },
@@ -59,11 +59,18 @@ const inter = Inter({
 
 export default async function RootLayout({children}: {children: React.ReactNode}) {
   const {isEnabled: isDraftMode} = await draftMode()
+  const {data: settings} = await sanityFetch({
+    query: settingsQuery,
+  })
+
+  const {data: pages} = await sanityFetch({
+    query: pagesQuery,
+  })
 
   return (
     <html lang="en" className={`${inter.variable} bg-white text-black`}>
       <body>
-        <section className="min-h-screen pt-24">
+        <section className="min-h-screen">
           {/* The <Toaster> component is responsible for rendering toast notifications used in /app/client-utils.ts and /app/components/DraftModeToast.tsx */}
           <Toaster />
           {isDraftMode && (
@@ -75,9 +82,17 @@ export default async function RootLayout({children}: {children: React.ReactNode}
           )}
           {/* The <SanityLive> component is responsible for making all sanityFetch calls in your application live, so should always be rendered. */}
           <SanityLive onError={handleError} />
-          <Header />
-          <main className="">{children}</main>
-          <Footer />
+          {/* Here a need to give on props dynamic navigations that created in sanity studio */}
+          <Header title={settings?.title || 'Кайрымдуу Бол'} logo={(settings as any)?.logoUrl} pages={(pages || []) as unknown as Page[]} whatsappPhone={(settings as any)?.whatsappPhone} />
+          <main className="pt-16 sm:pt-20 lg:pt-24">{children}</main>
+          <Footer 
+            heading={(settings as any)?.footerHeading}
+            description={(settings as any)?.footerDescription}
+            pages={(pages || []) as unknown as Page[]}
+            socialLinks={(settings as any)?.socialLinks}
+            copyrightText={(settings as any)?.copyrightText}
+            whatsappPhone={(settings as any)?.whatsappPhone}
+          />
         </section>
         <SpeedInsights />
       </body>

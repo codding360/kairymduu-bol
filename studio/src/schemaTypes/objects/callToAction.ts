@@ -42,6 +42,23 @@ export const callToAction = defineType({
       title: 'Button link',
       type: 'link',
     }),
+    defineField({
+      name: 'image',
+      title: 'Small Image',
+      type: 'image',
+      description: 'Optional small decorative image',
+      options: {
+        hotspot: true,
+      },
+      fields: [
+        {
+          name: 'alt',
+          type: 'string',
+          title: 'Alternative text',
+          description: 'Important for SEO and accessibility.',
+        },
+      ],
+    }),
   ],
   preview: {
     select: {

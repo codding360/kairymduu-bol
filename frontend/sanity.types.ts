@@ -13,14 +13,6 @@
  */
 
 // Source: schema.json
-export type CallToAction = {
-  _type: 'callToAction'
-  heading: string
-  text?: string
-  buttonText?: string
-  link?: Link
-}
-
 export type Link = {
   _type: 'link'
   linkType?: 'href' | 'page' | 'post'
@@ -40,42 +32,61 @@ export type Link = {
   openInNewTab?: boolean
 }
 
+export type DoctorsGrid = {
+  _type: 'doctorsGrid'
+  heading?: string
+  subheading?: string
+  doctors?: Array<{
+    _ref: string
+    _type: 'reference'
+    _weak?: boolean
+    _key: string
+    [internalGroqTypeReferenceTo]?: 'doctor'
+  }>
+}
+
+export type CallToAction = {
+  _type: 'callToAction'
+  heading: string
+  text?: string
+  buttonText?: string
+  link?: Link
+  image?: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
+}
+
 export type InfoSection = {
   _type: 'infoSection'
   heading?: string
   subheading?: string
-  content?: Array<{
-    children?: Array<{
-      marks?: Array<string>
-      text?: string
-      _type: 'span'
-      _key: string
-    }>
-    style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'blockquote'
-    listItem?: 'bullet' | 'number'
-    markDefs?: Array<{
-      linkType?: 'href' | 'page' | 'post'
-      href?: string
-      page?: {
-        _ref: string
-        _type: 'reference'
-        _weak?: boolean
-        [internalGroqTypeReferenceTo]?: 'page'
-      }
-      post?: {
-        _ref: string
-        _type: 'reference'
-        _weak?: boolean
-        [internalGroqTypeReferenceTo]?: 'post'
-      }
-      openInNewTab?: boolean
-      _type: 'link'
-      _key: string
-    }>
-    level?: number
-    _type: 'block'
-    _key: string
-  }>
+  content?: BlockContent
+  image?: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
+  imageOnLeft?: boolean
+  buttonText?: string
+  link?: Link
 }
 
 export type BlockContent = Array<{
@@ -111,6 +122,199 @@ export type BlockContent = Array<{
   _key: string
 }>
 
+export type Hospital = {
+  _id: string
+  _type: 'hospital'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  name: string
+  slug: Slug
+  avatar?: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
+  gallery?: Array<{
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+    _key: string
+  }>
+  specialty: string
+  affiliation?: string
+  location?: string
+  accreditation?: string
+  departments?: Array<string>
+  facilities?: Array<string>
+  description?: BlockContent
+}
+
+export type SanityImageCrop = {
+  _type: 'sanity.imageCrop'
+  top: number
+  bottom: number
+  left: number
+  right: number
+}
+
+export type SanityImageHotspot = {
+  _type: 'sanity.imageHotspot'
+  x: number
+  y: number
+  height: number
+  width: number
+}
+
+export type Slug = {
+  _type: 'slug'
+  current: string
+  source?: string
+}
+
+export type Doctor = {
+  _id: string
+  _type: 'doctor'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  name: string
+  slug: Slug
+  avatar?: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
+  gallery?: Array<{
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+    _key: string
+  }>
+  currentTitle: string
+  affiliation?: string
+  location?: string
+  specialities?: Array<string>
+  education?: BlockContent
+  experience?: string
+  areasOfExpertise?: Array<string>
+  careerPath?: BlockContent
+  bio?: BlockContent
+}
+
+export type Campaign = {
+  _id: string
+  _type: 'campaign'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title: string
+  slug: Slug
+  content?: BlockContent
+  excerpt?: string
+  mainImage: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
+  gallery?: Array<{
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+    _key: string
+  }>
+  goalAmount: number
+  raisedAmount: number
+  donorCount: number
+  currency: 'USD' | 'EUR' | 'GBP' | 'KGS'
+  category?: {
+    _ref: string
+    _type: 'reference'
+    _weak?: boolean
+    [internalGroqTypeReferenceTo]?: 'category'
+  }
+  organizer: {
+    _ref: string
+    _type: 'reference'
+    _weak?: boolean
+    [internalGroqTypeReferenceTo]?: 'person'
+  }
+  beneficiary?: string
+  location?: string
+  startDate?: string
+  endDate?: string
+  isUrgent?: boolean
+  isFeatured?: boolean
+  status?: 'active' | 'completed' | 'paused'
+  updates?: Array<{
+    title?: string
+    content?: string
+    date?: string
+    _key: string
+  }>
+}
+
+export type Category = {
+  _id: string
+  _type: 'category'
+  _createdAt: string
+  _updatedAt: string
+  _rev: string
+  title: string
+  slug: Slug
+  description?: string
+  icon?: string
+  color?: '#02A95C' | '#E02424' | '#1C64F2' | '#9333EA' | '#F59E0B' | '#10B981' | '#6B7280'
+}
+
 export type Settings = {
   _id: string
   _type: 'settings'
@@ -118,6 +322,19 @@ export type Settings = {
   _updatedAt: string
   _rev: string
   title: string
+  logo?: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
   description?: Array<{
     children?: Array<{
       marks?: Array<string>
@@ -150,6 +367,7 @@ export type Settings = {
     _type: 'block'
     _key: string
   }>
+  whatsappPhone?: string
   ogImage?: {
     asset?: {
       _ref: string
@@ -164,6 +382,20 @@ export type Settings = {
     metadataBase?: string
     _type: 'image'
   }
+  footerHeading?: string
+  footerDescription?: string
+  footerLinks?: Array<{
+    title: string
+    href: string
+    _key: string
+  }>
+  socialLinks?: {
+    facebook?: string
+    instagram?: string
+    twitter?: string
+    youtube?: string
+  }
+  copyrightText?: string
 }
 
 export type Page = {
@@ -183,6 +415,9 @@ export type Page = {
     | ({
         _key: string
       } & InfoSection)
+    | ({
+        _key: string
+      } & DoctorsGrid)
   >
 }
 
@@ -226,6 +461,7 @@ export type Person = {
   _rev: string
   firstName: string
   lastName: string
+  slug?: Slug
   picture: {
     asset?: {
       _ref: string
@@ -239,6 +475,20 @@ export type Person = {
     alt?: string
     _type: 'image'
   }
+  gallery?: Array<{
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+    _key: string
+  }>
 }
 
 export type SanityAssistInstructionTask = {
@@ -397,25 +647,20 @@ export type SanityImagePalette = {
 
 export type SanityImageDimensions = {
   _type: 'sanity.imageDimensions'
-  height?: number
-  width?: number
-  aspectRatio?: number
+  height: number
+  width: number
+  aspectRatio: number
 }
 
-export type SanityImageHotspot = {
-  _type: 'sanity.imageHotspot'
-  x?: number
-  y?: number
-  height?: number
-  width?: number
-}
-
-export type SanityImageCrop = {
-  _type: 'sanity.imageCrop'
-  top?: number
-  bottom?: number
-  left?: number
-  right?: number
+export type SanityImageMetadata = {
+  _type: 'sanity.imageMetadata'
+  location?: Geopoint
+  dimensions?: SanityImageDimensions
+  palette?: SanityImagePalette
+  lqip?: string
+  blurHash?: string
+  hasAlpha?: boolean
+  isOpaque?: boolean
 }
 
 export type SanityFileAsset = {
@@ -438,6 +683,13 @@ export type SanityFileAsset = {
   path?: string
   url?: string
   source?: SanityAssetSourceData
+}
+
+export type SanityAssetSourceData = {
+  _type: 'sanity.assetSourceData'
+  name?: string
+  id?: string
+  url?: string
 }
 
 export type SanityImageAsset = {
@@ -463,17 +715,6 @@ export type SanityImageAsset = {
   source?: SanityAssetSourceData
 }
 
-export type SanityImageMetadata = {
-  _type: 'sanity.imageMetadata'
-  location?: Geopoint
-  dimensions?: SanityImageDimensions
-  palette?: SanityImagePalette
-  lqip?: string
-  blurHash?: string
-  hasAlpha?: boolean
-  isOpaque?: boolean
-}
-
 export type Geopoint = {
   _type: 'geopoint'
   lat?: number
@@ -481,24 +722,19 @@ export type Geopoint = {
   alt?: number
 }
 
-export type Slug = {
-  _type: 'slug'
-  current: string
-  source?: string
-}
-
-export type SanityAssetSourceData = {
-  _type: 'sanity.assetSourceData'
-  name?: string
-  id?: string
-  url?: string
-}
-
 export type AllSanitySchemaTypes =
-  | CallToAction
   | Link
+  | DoctorsGrid
+  | CallToAction
   | InfoSection
   | BlockContent
+  | Hospital
+  | SanityImageCrop
+  | SanityImageHotspot
+  | Slug
+  | Doctor
+  | Campaign
+  | Category
   | Settings
   | Page
   | Post
@@ -518,18 +754,15 @@ export type AllSanitySchemaTypes =
   | SanityImagePaletteSwatch
   | SanityImagePalette
   | SanityImageDimensions
-  | SanityImageHotspot
-  | SanityImageCrop
-  | SanityFileAsset
-  | SanityImageAsset
   | SanityImageMetadata
-  | Geopoint
-  | Slug
+  | SanityFileAsset
   | SanityAssetSourceData
+  | SanityImageAsset
+  | Geopoint
 export declare const internalGroqTypeReferenceTo: unique symbol
 // Source: ./sanity/lib/queries.ts
 // Variable: settingsQuery
-// Query: *[_type == "settings"][0]
+// Query: *[_type == "settings"][0]{  ...,  "logoUrl": logo.asset->url,  whatsappPhone,  footerHeading,  footerDescription,  footerLinks,  socialLinks,  copyrightText}
 export type SettingsQueryResult = {
   _id: string
   _type: 'settings'
@@ -537,6 +770,19 @@ export type SettingsQueryResult = {
   _updatedAt: string
   _rev: string
   title: string
+  logo?: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
   description?: Array<{
     children?: Array<{
       marks?: Array<string>
@@ -569,6 +815,7 @@ export type SettingsQueryResult = {
     _type: 'block'
     _key: string
   }>
+  whatsappPhone: string | null
   ogImage?: {
     asset?: {
       _ref: string
@@ -583,9 +830,44 @@ export type SettingsQueryResult = {
     metadataBase?: string
     _type: 'image'
   }
+  footerHeading: string | null
+  footerDescription: string | null
+  footerLinks: Array<{
+    title: string
+    href: string
+    _key: string
+  }> | null
+  socialLinks: {
+    facebook?: string
+    instagram?: string
+    twitter?: string
+    youtube?: string
+  } | null
+  copyrightText: string | null
+  logoUrl: string | null
 } | null
+// Variable: pagesQuery
+// Query: *[_type == "page" && defined(slug.current)] {    _id,    _type,    name,    slug,    heading,    subheading,  }
+export type PagesQueryResult = Array<{
+  _id: string
+  _type: 'page'
+  name: string
+  slug: Slug
+  heading: string
+  subheading: string | null
+}>
+// Variable: categoriesQuery
+// Query: *[_type == "category"] | order(title asc) {    _id,    title,    "slug": slug.current,    description,    icon,    color,  }
+export type CategoriesQueryResult = Array<{
+  _id: string
+  title: string
+  slug: string
+  description: string | null
+  icon: string | null
+  color: '#02A95C' | '#10B981' | '#1C64F2' | '#6B7280' | '#9333EA' | '#E02424' | '#F59E0B' | null
+}>
 // Variable: getPageQuery
-// Query: *[_type == 'page' && slug.current == $slug][0]{    _id,    _type,    name,    slug,    heading,    subheading,    "pageBuilder": pageBuilder[]{      ...,      _type == "callToAction" => {          link {      ...,        _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  }      },      },      _type == "infoSection" => {        content[]{          ...,          markDefs[]{            ...,              _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  }          }        }      },    },  }
+// Query: *[_type == 'page' && slug.current == $slug][0]{    _id,    _type,    name,    slug,    heading,    subheading,    "pageBuilder": pageBuilder[]{      ...,      _type == "callToAction" => {          link {      ...,        _type == "link" => {    "page": page->slug.current,    "post": post->slug.current,    "campaign": campaign->slug.current  }      },      },      _type == "infoSection" => {        content[]{          ...,          markDefs[]{            ...,              _type == "link" => {    "page": page->slug.current,    "post": post->slug.current,    "campaign": campaign->slug.current  }          }        }      },      _type == "doctorsGrid" => {        ...,        doctors[]->{          _id,          name,          slug,          avatar,          gallery,          currentTitle,          location,          experience,        }      },    },  }
 export type GetPageQueryResult = {
   _id: string
   _type: 'page'
@@ -607,7 +889,62 @@ export type GetPageQueryResult = {
           page: string | null
           post: string | null
           openInNewTab?: boolean
+          campaign: null
         } | null
+        image?: {
+          asset?: {
+            _ref: string
+            _type: 'reference'
+            _weak?: boolean
+            [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+          }
+          media?: unknown
+          hotspot?: SanityImageHotspot
+          crop?: SanityImageCrop
+          alt?: string
+          _type: 'image'
+        }
+      }
+    | {
+        _key: string
+        _type: 'doctorsGrid'
+        heading?: string
+        subheading?: string
+        doctors: Array<{
+          _id: string
+          name: string
+          slug: Slug
+          avatar: {
+            asset?: {
+              _ref: string
+              _type: 'reference'
+              _weak?: boolean
+              [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+            }
+            media?: unknown
+            hotspot?: SanityImageHotspot
+            crop?: SanityImageCrop
+            alt?: string
+            _type: 'image'
+          } | null
+          gallery: Array<{
+            asset?: {
+              _ref: string
+              _type: 'reference'
+              _weak?: boolean
+              [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+            }
+            media?: unknown
+            hotspot?: SanityImageHotspot
+            crop?: SanityImageCrop
+            alt?: string
+            _type: 'image'
+            _key: string
+          }> | null
+          currentTitle: string
+          location: string | null
+          experience: string | null
+        }> | null
       }
     | {
         _key: string
@@ -631,17 +968,39 @@ export type GetPageQueryResult = {
             openInNewTab?: boolean
             _type: 'link'
             _key: string
+            campaign: null
           }> | null
           level?: number
           _type: 'block'
           _key: string
         }> | null
+        image?: {
+          asset?: {
+            _ref: string
+            _type: 'reference'
+            _weak?: boolean
+            [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+          }
+          media?: unknown
+          hotspot?: SanityImageHotspot
+          crop?: SanityImageCrop
+          alt?: string
+          _type: 'image'
+        }
+        imageOnLeft?: boolean
+        buttonText?: string
+        link?: Link
       }
   > | null
 } | null
 // Variable: sitemapData
-// Query: *[_type == "page" || _type == "post" && defined(slug.current)] | order(_type asc) {    "slug": slug.current,    _type,    _updatedAt,  }
+// Query: *[(_type == "page" || _type == "post" || _type == "campaign") && defined(slug.current)] | order(_type asc) {    "slug": slug.current,    _type,    _updatedAt,  }
 export type SitemapDataResult = Array<
+  | {
+      slug: string
+      _type: 'campaign'
+      _updatedAt: string
+    }
   | {
       slug: string
       _type: 'page'
@@ -694,8 +1053,448 @@ export type AllPostsQueryResult = Array<{
   } | null
 }>
 // Variable: allCampaignsQuery
-// Query: *[_type == "campaign" && defined(slug.current)] | order(date desc, _updatedAt desc) {      _id,  "status": select(_originalId in path("drafts.**") => "draft", "published"),  "title": coalesce(title, "Untitled"),  "slug": slug.current,  excerpt,  mainImage,  goalAmount,  raisedAmount,  "date": coalesce(date, _updatedAt),  "organizer": organizer->{firstName, lastName, picture},  }
-export type AllCampaignsQueryResult = Array<never>
+// Query: *[_type == "campaign" && defined(slug.current)] | order(startDate desc, _updatedAt desc) {      _id,  _createdAt,  "status": select(_originalId in path("drafts.**") => "draft", "published"),  "title": coalesce(title, "Untitled"),  "slug": slug.current,  excerpt,  mainImage,  gallery,  goalAmount,  raisedAmount,  donorCount,  currency,  beneficiary,  location,  startDate,  endDate,  isUrgent,  isFeatured,  status,  "date": coalesce(startDate, _updatedAt),  "organizer": organizer->{firstName, lastName, picture, gallery},  "category": category->{_id, title, "slug": slug.current, description, icon, color},  "bankRelations": bankRelations[]{    "bankName": bank->name,    "bankLogo": bank->logo,    "bankBackgroundColor": bank->backgroundColor,    "bankTextColor": bank->textColor,    reciver,    url,  },  }
+export type AllCampaignsQueryResult = Array<{
+  _id: string
+  _createdAt: string
+  status: 'active' | 'completed' | 'paused' | null
+  title: string
+  slug: string
+  excerpt: string | null
+  mainImage: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
+  gallery: Array<{
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+    _key: string
+  }> | null
+  goalAmount: number
+  raisedAmount: number
+  donorCount: number
+  currency: 'EUR' | 'GBP' | 'KGS' | 'USD'
+  beneficiary: string | null
+  location: string | null
+  startDate: string | null
+  endDate: string | null
+  isUrgent: boolean | null
+  isFeatured: boolean | null
+  date: string
+  organizer: {
+    firstName: string
+    lastName: string
+    picture: {
+      asset?: {
+        _ref: string
+        _type: 'reference'
+        _weak?: boolean
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+      }
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      alt?: string
+      _type: 'image'
+    }
+    gallery: Array<{
+      asset?: {
+        _ref: string
+        _type: 'reference'
+        _weak?: boolean
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+      }
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      alt?: string
+      _type: 'image'
+      _key: string
+    }> | null
+  }
+  category: {
+    _id: string
+    title: string
+    slug: string
+    description: string | null
+    icon: string | null
+    color: '#02A95C' | '#10B981' | '#1C64F2' | '#6B7280' | '#9333EA' | '#E02424' | '#F59E0B' | null
+  } | null
+  bankRelations: null
+}>
+// Variable: initialCampaignsQuery
+// Query: *[_type == "campaign" && defined(slug.current)] | order(startDate desc, _updatedAt desc) [0...30] {      _id,  _createdAt,  "status": select(_originalId in path("drafts.**") => "draft", "published"),  "title": coalesce(title, "Untitled"),  "slug": slug.current,  excerpt,  mainImage,  gallery,  goalAmount,  raisedAmount,  donorCount,  currency,  beneficiary,  location,  startDate,  endDate,  isUrgent,  isFeatured,  status,  "date": coalesce(startDate, _updatedAt),  "organizer": organizer->{firstName, lastName, picture, gallery},  "category": category->{_id, title, "slug": slug.current, description, icon, color},  "bankRelations": bankRelations[]{    "bankName": bank->name,    "bankLogo": bank->logo,    "bankBackgroundColor": bank->backgroundColor,    "bankTextColor": bank->textColor,    reciver,    url,  },  }
+export type InitialCampaignsQueryResult = Array<{
+  _id: string
+  _createdAt: string
+  status: 'active' | 'completed' | 'paused' | null
+  title: string
+  slug: string
+  excerpt: string | null
+  mainImage: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
+  gallery: Array<{
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+    _key: string
+  }> | null
+  goalAmount: number
+  raisedAmount: number
+  donorCount: number
+  currency: 'EUR' | 'GBP' | 'KGS' | 'USD'
+  beneficiary: string | null
+  location: string | null
+  startDate: string | null
+  endDate: string | null
+  isUrgent: boolean | null
+  isFeatured: boolean | null
+  date: string
+  organizer: {
+    firstName: string
+    lastName: string
+    picture: {
+      asset?: {
+        _ref: string
+        _type: 'reference'
+        _weak?: boolean
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+      }
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      alt?: string
+      _type: 'image'
+    }
+    gallery: Array<{
+      asset?: {
+        _ref: string
+        _type: 'reference'
+        _weak?: boolean
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+      }
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      alt?: string
+      _type: 'image'
+      _key: string
+    }> | null
+  }
+  category: {
+    _id: string
+    title: string
+    slug: string
+    description: string | null
+    icon: string | null
+    color: '#02A95C' | '#10B981' | '#1C64F2' | '#6B7280' | '#9333EA' | '#E02424' | '#F59E0B' | null
+  } | null
+  bankRelations: null
+}>
+// Variable: paginatedCampaignsQuery
+// Query: *[_type == "campaign" && defined(slug.current)] | order(startDate desc, _updatedAt desc) [$offset...$limit] {      _id,  _createdAt,  "status": select(_originalId in path("drafts.**") => "draft", "published"),  "title": coalesce(title, "Untitled"),  "slug": slug.current,  excerpt,  mainImage,  gallery,  goalAmount,  raisedAmount,  donorCount,  currency,  beneficiary,  location,  startDate,  endDate,  isUrgent,  isFeatured,  status,  "date": coalesce(startDate, _updatedAt),  "organizer": organizer->{firstName, lastName, picture, gallery},  "category": category->{_id, title, "slug": slug.current, description, icon, color},  "bankRelations": bankRelations[]{    "bankName": bank->name,    "bankLogo": bank->logo,    "bankBackgroundColor": bank->backgroundColor,    "bankTextColor": bank->textColor,    reciver,    url,  },  }
+export type PaginatedCampaignsQueryResult = Array<{
+  _id: string
+  _createdAt: string
+  status: 'active' | 'completed' | 'paused' | null
+  title: string
+  slug: string
+  excerpt: string | null
+  mainImage: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
+  gallery: Array<{
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+    _key: string
+  }> | null
+  goalAmount: number
+  raisedAmount: number
+  donorCount: number
+  currency: 'EUR' | 'GBP' | 'KGS' | 'USD'
+  beneficiary: string | null
+  location: string | null
+  startDate: string | null
+  endDate: string | null
+  isUrgent: boolean | null
+  isFeatured: boolean | null
+  date: string
+  organizer: {
+    firstName: string
+    lastName: string
+    picture: {
+      asset?: {
+        _ref: string
+        _type: 'reference'
+        _weak?: boolean
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+      }
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      alt?: string
+      _type: 'image'
+    }
+    gallery: Array<{
+      asset?: {
+        _ref: string
+        _type: 'reference'
+        _weak?: boolean
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+      }
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      alt?: string
+      _type: 'image'
+      _key: string
+    }> | null
+  }
+  category: {
+    _id: string
+    title: string
+    slug: string
+    description: string | null
+    icon: string | null
+    color: '#02A95C' | '#10B981' | '#1C64F2' | '#6B7280' | '#9333EA' | '#E02424' | '#F59E0B' | null
+  } | null
+  bankRelations: null
+}>
+// Variable: campaignsCountQuery
+// Query: count(*[_type == "campaign" && defined(slug.current)])
+export type CampaignsCountQueryResult = number
+// Variable: featuredCampaignsQuery
+// Query: *[_type == "campaign" && isFeatured == true && defined(slug.current)] | order(startDate desc, _updatedAt desc) [0...3] {      _id,  _createdAt,  "status": select(_originalId in path("drafts.**") => "draft", "published"),  "title": coalesce(title, "Untitled"),  "slug": slug.current,  excerpt,  mainImage,  gallery,  goalAmount,  raisedAmount,  donorCount,  currency,  beneficiary,  location,  startDate,  endDate,  isUrgent,  isFeatured,  status,  "date": coalesce(startDate, _updatedAt),  "organizer": organizer->{firstName, lastName, picture, gallery},  "category": category->{_id, title, "slug": slug.current, description, icon, color},  "bankRelations": bankRelations[]{    "bankName": bank->name,    "bankLogo": bank->logo,    "bankBackgroundColor": bank->backgroundColor,    "bankTextColor": bank->textColor,    reciver,    url,  },  }
+export type FeaturedCampaignsQueryResult = Array<{
+  _id: string
+  _createdAt: string
+  status: 'active' | 'completed' | 'paused' | null
+  title: string
+  slug: string
+  excerpt: string | null
+  mainImage: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
+  gallery: Array<{
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+    _key: string
+  }> | null
+  goalAmount: number
+  raisedAmount: number
+  donorCount: number
+  currency: 'EUR' | 'GBP' | 'KGS' | 'USD'
+  beneficiary: string | null
+  location: string | null
+  startDate: string | null
+  endDate: string | null
+  isUrgent: boolean | null
+  isFeatured: boolean | null
+  date: string
+  organizer: {
+    firstName: string
+    lastName: string
+    picture: {
+      asset?: {
+        _ref: string
+        _type: 'reference'
+        _weak?: boolean
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+      }
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      alt?: string
+      _type: 'image'
+    }
+    gallery: Array<{
+      asset?: {
+        _ref: string
+        _type: 'reference'
+        _weak?: boolean
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+      }
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      alt?: string
+      _type: 'image'
+      _key: string
+    }> | null
+  }
+  category: {
+    _id: string
+    title: string
+    slug: string
+    description: string | null
+    icon: string | null
+    color: '#02A95C' | '#10B981' | '#1C64F2' | '#6B7280' | '#9333EA' | '#E02424' | '#F59E0B' | null
+  } | null
+  bankRelations: null
+}>
+// Variable: urgentCampaignsQuery
+// Query: *[_type == "campaign" && isUrgent == true && defined(slug.current)] | order(startDate desc, _updatedAt desc) [0...6] {      _id,  _createdAt,  "status": select(_originalId in path("drafts.**") => "draft", "published"),  "title": coalesce(title, "Untitled"),  "slug": slug.current,  excerpt,  mainImage,  gallery,  goalAmount,  raisedAmount,  donorCount,  currency,  beneficiary,  location,  startDate,  endDate,  isUrgent,  isFeatured,  status,  "date": coalesce(startDate, _updatedAt),  "organizer": organizer->{firstName, lastName, picture, gallery},  "category": category->{_id, title, "slug": slug.current, description, icon, color},  "bankRelations": bankRelations[]{    "bankName": bank->name,    "bankLogo": bank->logo,    "bankBackgroundColor": bank->backgroundColor,    "bankTextColor": bank->textColor,    reciver,    url,  },  }
+export type UrgentCampaignsQueryResult = Array<{
+  _id: string
+  _createdAt: string
+  status: 'active' | 'completed' | 'paused' | null
+  title: string
+  slug: string
+  excerpt: string | null
+  mainImage: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
+  gallery: Array<{
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+    _key: string
+  }> | null
+  goalAmount: number
+  raisedAmount: number
+  donorCount: number
+  currency: 'EUR' | 'GBP' | 'KGS' | 'USD'
+  beneficiary: string | null
+  location: string | null
+  startDate: string | null
+  endDate: string | null
+  isUrgent: boolean | null
+  isFeatured: boolean | null
+  date: string
+  organizer: {
+    firstName: string
+    lastName: string
+    picture: {
+      asset?: {
+        _ref: string
+        _type: 'reference'
+        _weak?: boolean
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+      }
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      alt?: string
+      _type: 'image'
+    }
+    gallery: Array<{
+      asset?: {
+        _ref: string
+        _type: 'reference'
+        _weak?: boolean
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+      }
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      alt?: string
+      _type: 'image'
+      _key: string
+    }> | null
+  }
+  category: {
+    _id: string
+    title: string
+    slug: string
+    description: string | null
+    icon: string | null
+    color: '#02A95C' | '#10B981' | '#1C64F2' | '#6B7280' | '#9333EA' | '#E02424' | '#F59E0B' | null
+  } | null
+  bankRelations: null
+}>
 // Variable: morePostsQuery
 // Query: *[_type == "post" && _id != $skip && defined(slug.current)] | order(date desc, _updatedAt desc) [0...$limit] {      _id,  "status": select(_originalId in path("drafts.**") => "draft", "published"),  "title": coalesce(title, "Untitled"),  "slug": slug.current,  excerpt,  coverImage,  "date": coalesce(date, _updatedAt),  "author": author->{firstName, lastName, picture},  }
 export type MorePostsQueryResult = Array<{
@@ -737,7 +1536,7 @@ export type MorePostsQueryResult = Array<{
   } | null
 }>
 // Variable: postQuery
-// Query: *[_type == "post" && slug.current == $slug] [0] {    content[]{    ...,    markDefs[]{      ...,        _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  }    }  },      _id,  "status": select(_originalId in path("drafts.**") => "draft", "published"),  "title": coalesce(title, "Untitled"),  "slug": slug.current,  excerpt,  coverImage,  "date": coalesce(date, _updatedAt),  "author": author->{firstName, lastName, picture},  }
+// Query: *[_type == "post" && slug.current == $slug] [0] {    content[]{    ...,    markDefs[]{      ...,        _type == "link" => {    "page": page->slug.current,    "post": post->slug.current,    "campaign": campaign->slug.current  }    }  },      _id,  "status": select(_originalId in path("drafts.**") => "draft", "published"),  "title": coalesce(title, "Untitled"),  "slug": slug.current,  excerpt,  coverImage,  "date": coalesce(date, _updatedAt),  "author": author->{firstName, lastName, picture},  }
 export type PostQueryResult = {
   content: Array<{
     children?: Array<{
@@ -756,6 +1555,7 @@ export type PostQueryResult = {
       openInNewTab?: boolean
       _type: 'link'
       _key: string
+      campaign: null
     }> | null
     level?: number
     _type: 'block'
@@ -799,8 +1599,116 @@ export type PostQueryResult = {
   } | null
 } | null
 // Variable: campaignQuery
-// Query: *[_type == "campaign" && slug.current == $slug] [0] {    content[]{    ...,    markDefs[]{      ...,        _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  }    }  },      _id,  "status": select(_originalId in path("drafts.**") => "draft", "published"),  "title": coalesce(title, "Untitled"),  "slug": slug.current,  excerpt,  mainImage,  goalAmount,  raisedAmount,  "date": coalesce(date, _updatedAt),  "organizer": organizer->{firstName, lastName, picture},  }
-export type CampaignQueryResult = null
+// Query: *[_type == "campaign" && slug.current == $slug] [0] {      _id,  _createdAt,  "status": select(_originalId in path("drafts.**") => "draft", "published"),  "title": coalesce(title, "Untitled"),  "slug": slug.current,  excerpt,  mainImage,  gallery,  goalAmount,  raisedAmount,  donorCount,  currency,  beneficiary,  location,  startDate,  endDate,  isUrgent,  isFeatured,  status,  "date": coalesce(startDate, _updatedAt),  "organizer": organizer->{firstName, lastName, picture, gallery},  "category": category->{_id, title, "slug": slug.current, description, icon, color},  "bankRelations": bankRelations[]{    "bankName": bank->name,    "bankLogo": bank->logo,    "bankBackgroundColor": bank->backgroundColor,    "bankTextColor": bank->textColor,    reciver,    url,  },    content[]{    ...,    markDefs[]{      ...,        _type == "link" => {    "page": page->slug.current,    "post": post->slug.current,    "campaign": campaign->slug.current  }    }    }  }
+export type CampaignQueryResult = {
+  _id: string
+  _createdAt: string
+  status: 'active' | 'completed' | 'paused' | null
+  title: string
+  slug: string
+  excerpt: string | null
+  mainImage: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  }
+  gallery: Array<{
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+    _key: string
+  }> | null
+  goalAmount: number
+  raisedAmount: number
+  donorCount: number
+  currency: 'EUR' | 'GBP' | 'KGS' | 'USD'
+  beneficiary: string | null
+  location: string | null
+  startDate: string | null
+  endDate: string | null
+  isUrgent: boolean | null
+  isFeatured: boolean | null
+  date: string
+  organizer: {
+    firstName: string
+    lastName: string
+    picture: {
+      asset?: {
+        _ref: string
+        _type: 'reference'
+        _weak?: boolean
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+      }
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      alt?: string
+      _type: 'image'
+    }
+    gallery: Array<{
+      asset?: {
+        _ref: string
+        _type: 'reference'
+        _weak?: boolean
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+      }
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      alt?: string
+      _type: 'image'
+      _key: string
+    }> | null
+  }
+  category: {
+    _id: string
+    title: string
+    slug: string
+    description: string | null
+    icon: string | null
+    color: '#02A95C' | '#10B981' | '#1C64F2' | '#6B7280' | '#9333EA' | '#E02424' | '#F59E0B' | null
+  } | null
+  bankRelations: null
+  content: Array<{
+    children?: Array<{
+      marks?: Array<string>
+      text?: string
+      _type: 'span'
+      _key: string
+    }>
+    style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'normal'
+    listItem?: 'bullet' | 'number'
+    markDefs: Array<{
+      linkType?: 'href' | 'page' | 'post'
+      href?: string
+      page: string | null
+      post: string | null
+      openInNewTab?: boolean
+      _type: 'link'
+      _key: string
+      campaign: null
+    }> | null
+    level?: number
+    _type: 'block'
+    _key: string
+  }> | null
+} | null
 // Variable: postPagesSlugs
 // Query: *[_type == "post" && defined(slug.current)]  {"slug": slug.current}
 export type PostPagesSlugsResult = Array<{
@@ -808,10 +1716,103 @@ export type PostPagesSlugsResult = Array<{
 }>
 // Variable: campaignPagesSlugs
 // Query: *[_type == "campaign" && defined(slug.current)]  {"slug": slug.current}
-export type CampaignPagesSlugsResult = Array<never>
+export type CampaignPagesSlugsResult = Array<{
+  slug: string
+}>
 // Variable: pagesSlugs
 // Query: *[_type == "page" && defined(slug.current)]  {"slug": slug.current}
 export type PagesSlugsResult = Array<{
+  slug: string
+}>
+// Variable: allDoctorsQuery
+// Query: *[_type == "doctor" && defined(slug.current)] | order(name asc) {      _id,  name,  "slug": slug.current,  avatar,  gallery,  currentTitle,  affiliation,  location,  specialities,  education,  experience,  areasOfExpertise,  careerPath,  bio,  }
+export type AllDoctorsQueryResult = Array<{
+  _id: string
+  name: string
+  slug: string
+  avatar: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  } | null
+  gallery: Array<{
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+    _key: string
+  }> | null
+  currentTitle: string
+  affiliation: string | null
+  location: string | null
+  specialities: Array<string> | null
+  education: BlockContent | null
+  experience: string | null
+  areasOfExpertise: Array<string> | null
+  careerPath: BlockContent | null
+  bio: BlockContent | null
+}>
+// Variable: doctorQuery
+// Query: *[_type == "doctor" && slug.current == $slug] [0] {      _id,  name,  "slug": slug.current,  avatar,  gallery,  currentTitle,  affiliation,  location,  specialities,  education,  experience,  areasOfExpertise,  careerPath,  bio,  }
+export type DoctorQueryResult = {
+  _id: string
+  name: string
+  slug: string
+  avatar: {
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  } | null
+  gallery: Array<{
+    asset?: {
+      _ref: string
+      _type: 'reference'
+      _weak?: boolean
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset'
+    }
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+    _key: string
+  }> | null
+  currentTitle: string
+  affiliation: string | null
+  location: string | null
+  specialities: Array<string> | null
+  education: BlockContent | null
+  experience: string | null
+  areasOfExpertise: Array<string> | null
+  careerPath: BlockContent | null
+  bio: BlockContent | null
+} | null
+// Variable: doctorPagesSlugs
+// Query: *[_type == "doctor" && defined(slug.current)]  {"slug": slug.current}
+export type DoctorPagesSlugsResult = Array<{
   slug: string
 }>
 
@@ -819,16 +1820,26 @@ export type PagesSlugsResult = Array<{
 import '@sanity/client'
 declare module '@sanity/client' {
   interface SanityQueries {
-    '*[_type == "settings"][0]': SettingsQueryResult
-    '\n  *[_type == \'page\' && slug.current == $slug][0]{\n    _id,\n    _type,\n    name,\n    slug,\n    heading,\n    subheading,\n    "pageBuilder": pageBuilder[]{\n      ...,\n      _type == "callToAction" => {\n        \n  link {\n      ...,\n      \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n      }\n,\n      },\n      _type == "infoSection" => {\n        content[]{\n          ...,\n          markDefs[]{\n            ...,\n            \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n          }\n        }\n      },\n    },\n  }\n': GetPageQueryResult
-    '\n  *[_type == "page" || _type == "post" && defined(slug.current)] | order(_type asc) {\n    "slug": slug.current,\n    _type,\n    _updatedAt,\n  }\n': SitemapDataResult
+    '*[_type == "settings"][0]{\n  ...,\n  "logoUrl": logo.asset->url,\n  whatsappPhone,\n  footerHeading,\n  footerDescription,\n  footerLinks,\n  socialLinks,\n  copyrightText\n}': SettingsQueryResult
+    '\n  *[_type == "page" && defined(slug.current)] {\n    _id,\n    _type,\n    name,\n    slug,\n    heading,\n    subheading,\n  }\n': PagesQueryResult
+    '\n  *[_type == "category"] | order(title asc) {\n    _id,\n    title,\n    "slug": slug.current,\n    description,\n    icon,\n    color,\n  }\n': CategoriesQueryResult
+    '\n  *[_type == \'page\' && slug.current == $slug][0]{\n    _id,\n    _type,\n    name,\n    slug,\n    heading,\n    subheading,\n    "pageBuilder": pageBuilder[]{\n      ...,\n      _type == "callToAction" => {\n        \n  link {\n      ...,\n      \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current,\n    "campaign": campaign->slug.current\n  }\n\n      }\n,\n      },\n      _type == "infoSection" => {\n        content[]{\n          ...,\n          markDefs[]{\n            ...,\n            \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current,\n    "campaign": campaign->slug.current\n  }\n\n          }\n        }\n      },\n      _type == "doctorsGrid" => {\n        ...,\n        doctors[]->{\n          _id,\n          name,\n          slug,\n          avatar,\n          gallery,\n          currentTitle,\n          location,\n          experience,\n        }\n      },\n    },\n  }\n': GetPageQueryResult
+    '\n  *[(_type == "page" || _type == "post" || _type == "campaign") && defined(slug.current)] | order(_type asc) {\n    "slug": slug.current,\n    _type,\n    _updatedAt,\n  }\n': SitemapDataResult
     '\n  *[_type == "post" && defined(slug.current)] | order(date desc, _updatedAt desc) {\n    \n  _id,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "slug": slug.current,\n  excerpt,\n  coverImage,\n  "date": coalesce(date, _updatedAt),\n  "author": author->{firstName, lastName, picture},\n\n  }\n': AllPostsQueryResult
-    '\n  *[_type == "campaign" && defined(slug.current)] | order(date desc, _updatedAt desc) {\n    \n  _id,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "slug": slug.current,\n  excerpt,\n  mainImage,\n  goalAmount,\n  raisedAmount,\n  "date": coalesce(date, _updatedAt),\n  "organizer": organizer->{firstName, lastName, picture},\n\n  }\n': AllCampaignsQueryResult
+    '\n  *[_type == "campaign" && defined(slug.current)] | order(startDate desc, _updatedAt desc) {\n    \n  _id,\n  _createdAt,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "slug": slug.current,\n  excerpt,\n  mainImage,\n  gallery,\n  goalAmount,\n  raisedAmount,\n  donorCount,\n  currency,\n  beneficiary,\n  location,\n  startDate,\n  endDate,\n  isUrgent,\n  isFeatured,\n  status,\n  "date": coalesce(startDate, _updatedAt),\n  "organizer": organizer->{firstName, lastName, picture, gallery},\n  "category": category->{_id, title, "slug": slug.current, description, icon, color},\n  "bankRelations": bankRelations[]{\n    "bankName": bank->name,\n    "bankLogo": bank->logo,\n    "bankBackgroundColor": bank->backgroundColor,\n    "bankTextColor": bank->textColor,\n    reciver,\n    url,\n  },\n\n  }\n': AllCampaignsQueryResult
+    '\n  *[_type == "campaign" && defined(slug.current)] | order(startDate desc, _updatedAt desc) [0...30] {\n    \n  _id,\n  _createdAt,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "slug": slug.current,\n  excerpt,\n  mainImage,\n  gallery,\n  goalAmount,\n  raisedAmount,\n  donorCount,\n  currency,\n  beneficiary,\n  location,\n  startDate,\n  endDate,\n  isUrgent,\n  isFeatured,\n  status,\n  "date": coalesce(startDate, _updatedAt),\n  "organizer": organizer->{firstName, lastName, picture, gallery},\n  "category": category->{_id, title, "slug": slug.current, description, icon, color},\n  "bankRelations": bankRelations[]{\n    "bankName": bank->name,\n    "bankLogo": bank->logo,\n    "bankBackgroundColor": bank->backgroundColor,\n    "bankTextColor": bank->textColor,\n    reciver,\n    url,\n  },\n\n  }\n': InitialCampaignsQueryResult
+    '\n  *[_type == "campaign" && defined(slug.current)] | order(startDate desc, _updatedAt desc) [$offset...$limit] {\n    \n  _id,\n  _createdAt,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "slug": slug.current,\n  excerpt,\n  mainImage,\n  gallery,\n  goalAmount,\n  raisedAmount,\n  donorCount,\n  currency,\n  beneficiary,\n  location,\n  startDate,\n  endDate,\n  isUrgent,\n  isFeatured,\n  status,\n  "date": coalesce(startDate, _updatedAt),\n  "organizer": organizer->{firstName, lastName, picture, gallery},\n  "category": category->{_id, title, "slug": slug.current, description, icon, color},\n  "bankRelations": bankRelations[]{\n    "bankName": bank->name,\n    "bankLogo": bank->logo,\n    "bankBackgroundColor": bank->backgroundColor,\n    "bankTextColor": bank->textColor,\n    reciver,\n    url,\n  },\n\n  }\n': PaginatedCampaignsQueryResult
+    '\n  count(*[_type == "campaign" && defined(slug.current)])\n': CampaignsCountQueryResult
+    '\n  *[_type == "campaign" && isFeatured == true && defined(slug.current)] | order(startDate desc, _updatedAt desc) [0...3] {\n    \n  _id,\n  _createdAt,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "slug": slug.current,\n  excerpt,\n  mainImage,\n  gallery,\n  goalAmount,\n  raisedAmount,\n  donorCount,\n  currency,\n  beneficiary,\n  location,\n  startDate,\n  endDate,\n  isUrgent,\n  isFeatured,\n  status,\n  "date": coalesce(startDate, _updatedAt),\n  "organizer": organizer->{firstName, lastName, picture, gallery},\n  "category": category->{_id, title, "slug": slug.current, description, icon, color},\n  "bankRelations": bankRelations[]{\n    "bankName": bank->name,\n    "bankLogo": bank->logo,\n    "bankBackgroundColor": bank->backgroundColor,\n    "bankTextColor": bank->textColor,\n    reciver,\n    url,\n  },\n\n  }\n': FeaturedCampaignsQueryResult
+    '\n  *[_type == "campaign" && isUrgent == true && defined(slug.current)] | order(startDate desc, _updatedAt desc) [0...6] {\n    \n  _id,\n  _createdAt,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "slug": slug.current,\n  excerpt,\n  mainImage,\n  gallery,\n  goalAmount,\n  raisedAmount,\n  donorCount,\n  currency,\n  beneficiary,\n  location,\n  startDate,\n  endDate,\n  isUrgent,\n  isFeatured,\n  status,\n  "date": coalesce(startDate, _updatedAt),\n  "organizer": organizer->{firstName, lastName, picture, gallery},\n  "category": category->{_id, title, "slug": slug.current, description, icon, color},\n  "bankRelations": bankRelations[]{\n    "bankName": bank->name,\n    "bankLogo": bank->logo,\n    "bankBackgroundColor": bank->backgroundColor,\n    "bankTextColor": bank->textColor,\n    reciver,\n    url,\n  },\n\n  }\n': UrgentCampaignsQueryResult
     '\n  *[_type == "post" && _id != $skip && defined(slug.current)] | order(date desc, _updatedAt desc) [0...$limit] {\n    \n  _id,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "slug": slug.current,\n  excerpt,\n  coverImage,\n  "date": coalesce(date, _updatedAt),\n  "author": author->{firstName, lastName, picture},\n\n  }\n': MorePostsQueryResult
-    '\n  *[_type == "post" && slug.current == $slug] [0] {\n    content[]{\n    ...,\n    markDefs[]{\n      ...,\n      \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n    }\n  },\n    \n  _id,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "slug": slug.current,\n  excerpt,\n  coverImage,\n  "date": coalesce(date, _updatedAt),\n  "author": author->{firstName, lastName, picture},\n\n  }\n': PostQueryResult
-    '\n  *[_type == "campaign" && slug.current == $slug] [0] {\n    content[]{\n    ...,\n    markDefs[]{\n      ...,\n      \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n    }\n  },\n    \n  _id,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "slug": slug.current,\n  excerpt,\n  mainImage,\n  goalAmount,\n  raisedAmount,\n  "date": coalesce(date, _updatedAt),\n  "organizer": organizer->{firstName, lastName, picture},\n\n  }\n': CampaignQueryResult
+    '\n  *[_type == "post" && slug.current == $slug] [0] {\n    content[]{\n    ...,\n    markDefs[]{\n      ...,\n      \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current,\n    "campaign": campaign->slug.current\n  }\n\n    }\n  },\n    \n  _id,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "slug": slug.current,\n  excerpt,\n  coverImage,\n  "date": coalesce(date, _updatedAt),\n  "author": author->{firstName, lastName, picture},\n\n  }\n': PostQueryResult
+    '\n  *[_type == "campaign" && slug.current == $slug] [0] {\n    \n  _id,\n  _createdAt,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "slug": slug.current,\n  excerpt,\n  mainImage,\n  gallery,\n  goalAmount,\n  raisedAmount,\n  donorCount,\n  currency,\n  beneficiary,\n  location,\n  startDate,\n  endDate,\n  isUrgent,\n  isFeatured,\n  status,\n  "date": coalesce(startDate, _updatedAt),\n  "organizer": organizer->{firstName, lastName, picture, gallery},\n  "category": category->{_id, title, "slug": slug.current, description, icon, color},\n  "bankRelations": bankRelations[]{\n    "bankName": bank->name,\n    "bankLogo": bank->logo,\n    "bankBackgroundColor": bank->backgroundColor,\n    "bankTextColor": bank->textColor,\n    reciver,\n    url,\n  },\n\n    content[]{\n    ...,\n    markDefs[]{\n      ...,\n      \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current,\n    "campaign": campaign->slug.current\n  }\n\n    }\n    }\n  }\n': CampaignQueryResult
     '\n  *[_type == "post" && defined(slug.current)]\n  {"slug": slug.current}\n': PostPagesSlugsResult
     '\n  *[_type == "campaign" && defined(slug.current)]\n  {"slug": slug.current}\n': CampaignPagesSlugsResult
     '\n  *[_type == "page" && defined(slug.current)]\n  {"slug": slug.current}\n': PagesSlugsResult
+    '\n  *[_type == "doctor" && defined(slug.current)] | order(name asc) {\n    \n  _id,\n  name,\n  "slug": slug.current,\n  avatar,\n  gallery,\n  currentTitle,\n  affiliation,\n  location,\n  specialities,\n  education,\n  experience,\n  areasOfExpertise,\n  careerPath,\n  bio,\n\n  }\n': AllDoctorsQueryResult
+    '\n  *[_type == "doctor" && slug.current == $slug] [0] {\n    \n  _id,\n  name,\n  "slug": slug.current,\n  avatar,\n  gallery,\n  currentTitle,\n  affiliation,\n  location,\n  specialities,\n  education,\n  experience,\n  areasOfExpertise,\n  careerPath,\n  bio,\n\n  }\n': DoctorQueryResult
+    '\n  *[_type == "doctor" && defined(slug.current)]\n  {"slug": slug.current}\n': DoctorPagesSlugsResult
   }
 }

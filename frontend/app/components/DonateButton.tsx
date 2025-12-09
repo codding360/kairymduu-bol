@@ -1,26 +1,31 @@
 'use client'
 
-import { useState } from 'react'
+import React from 'react'
 
-export default function DonateButton() {
-  const [isLoading, setIsLoading] = useState(false)
+type DonateButtonProps = {
+  onClick?: () => void
+  className?: string
+  children?: React.ReactNode
+  disabled?: boolean
+}
 
-  const handleDonate = () => {
-    setIsLoading(true)
-    // Simulate API call
-    setTimeout(() => {
-      alert("This is a demo! In a real app, this would open Stripe Checkout.")
-      setIsLoading(false)
-    }, 500)
-  }
+export default function DonateButton({
+  onClick,
+  className = '',
+  children,
+  disabled = false,
+}: DonateButtonProps) {
+  const baseClasses =
+    'cursor-pointer w-full bg-primary-600 hover:bg-primary-700 text-white font-bold py-4 px-6 rounded-lg transition-all duration-300 text-lg shadow-sm active:scale-[0.98]'
 
   return (
-    <button 
-      onClick={handleDonate}
-      disabled={isLoading}
-      className="w-full bg-[#ffa400] hover:bg-[#ffb833] text-black font-bold py-4 px-4 rounded shadow transition-colors text-lg disabled:opacity-50 disabled:cursor-not-allowed"
+    <button
+      type="button"
+      onClick={onClick}
+      disabled={disabled}
+      className={`${baseClasses} ${disabled ? 'opacity-60 cursor-not-allowed' : ''} ${className}`}
     >
-      {isLoading ? 'Processing...' : 'Donate now'}
+      {children || 'Пожертвовать'}
     </button>
   )
 }

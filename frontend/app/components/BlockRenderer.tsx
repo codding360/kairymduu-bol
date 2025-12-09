@@ -2,6 +2,7 @@ import React from 'react'
 
 import Cta from '@/app/components/Cta'
 import Info from '@/app/components/InfoSection'
+import { AllDoctors } from '@/app/components/Doctors'
 import {dataAttr} from '@/sanity/lib/utils'
 
 type BlocksType = {
@@ -23,6 +24,7 @@ type BlockProps = {
 const Blocks: BlocksType = {
   callToAction: Cta,
   infoSection: Info,
+  doctorsGrid: AllDoctors,
 }
 
 /**

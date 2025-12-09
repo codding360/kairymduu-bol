@@ -25,6 +25,15 @@ export const person = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
+      name: 'slug',
+      title: 'Slug',
+      type: 'slug',
+      options: {
+        source: (doc: any) => `${doc.firstName} ${doc.lastName}`,
+        maxLength: 96,
+      },
+    }),
+    defineField({
       name: 'picture',
       title: 'Picture',
       type: 'image',
@@ -52,6 +61,25 @@ export const person = defineType({
         },
       },
       validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: 'gallery',
+      title: 'Image Gallery',
+      type: 'array',
+      of: [
+        {
+          type: 'image',
+          options: {hotspot: true},
+          fields: [
+            {
+              name: 'alt',
+              type: 'string',
+              title: 'Alternative text',
+            },
+          ],
+        },
+      ],
+      description: 'Additional images for the person',
     }),
   ],
   // List preview configuration. https://www.sanity.io/docs/previews-list-views

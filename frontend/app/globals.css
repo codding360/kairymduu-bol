@@ -9,6 +9,7 @@
 
 @theme {
   --shadow-layer: 0 35px 60px -15px rgba(0, 0, 0, 0.3);
+  --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 
   --color-framework: #000;
   --color-black: #0b0b0b;
@@ -28,8 +29,192 @@
   --color-gray-900: #1b1d27;
   --color-gray-950: #13141b;
 
+  /* Custom colors for Kairymduu Bol */
+  --color-primary-50: #e6f7f8;
+  --color-primary-100: #b3e8eb;
+  --color-primary-200: #80d9de;
+  --color-primary-300: #4dcad1;
+  --color-primary-400: #26b3bb;
+  --color-primary-500: #00969E;
+  --color-primary-600: #00858c;
+  --color-primary-700: #006b71;
+  --color-primary-800: #005156;
+  --color-primary-900: #003a3d;
+  
+  --color-forest-500: #02a95c;
+  --color-forest-600: #028e4d;
+  --color-forest-700: #026b3a;
+  --color-ink: #1b1d27;
+  --color-ivory: #fafaf9;
+  --color-stone-100: #f5f5f4;
+  --color-stone-200: #e7e5e4;
+  --color-stone-300: #d6d3d1;
+  --color-stone-400: #a8a29e;
+  --color-stone-500: #78716c;
+  --color-stone-600: #57534e;
+  --color-stone-700: #44403c;
+
   --font-display: 'Inter', 'sans-serif';
   --font-sans: 'Inter', 'sans-serif';
 
   --default-transition-duration: 250ms;
+}
+
+/* Utility classes */
+.chip {
+  @apply inline-block rounded-full px-4 py-2 text-xs font-semibold uppercase tracking-wider;
+}
+
+.glass-panel {
+  @apply rounded-3xl border border-stone-200/60 bg-white/40 backdrop-blur-sm;
+}
+
+/* Floating animations for hero circles */
+@keyframes float-1 {
+  0%, 100% {
+    transform: translateY(0px) translateX(0px) rotate(0deg);
+  }
+  33% {
+    transform: translateY(-20px) translateX(10px) rotate(2deg);
+  }
+  66% {
+    transform: translateY(-10px) translateX(-10px) rotate(-2deg);
+  }
+}
+
+@keyframes float-2 {
+  0%, 100% {
+    transform: translateY(0px) translateX(0px) rotate(0deg);
+  }
+  33% {
+    transform: translateY(-15px) translateX(-15px) rotate(-3deg);
+  }
+  66% {
+    transform: translateY(-25px) translateX(5px) rotate(3deg);
+  }
+}
+
+@keyframes float-3 {
+  0%, 100% {
+    transform: translateY(0px) translateX(0px) rotate(0deg);
+  }
+  33% {
+    transform: translateY(-10px) translateX(15px) rotate(1deg);
+  }
+  66% {
+    transform: translateY(-20px) translateX(-5px) rotate(-1deg);
+  }
+}
+
+@keyframes float-4 {
+  0%, 100% {
+    transform: translateY(0px) translateX(0px) rotate(0deg);
+  }
+  33% {
+    transform: translateY(-18px) translateX(-8px) rotate(-2deg);
+  }
+  66% {
+    transform: translateY(-8px) translateX(12px) rotate(2deg);
+  }
+}
+
+@keyframes float-5 {
+  0%, 100% {
+    transform: translateY(0px) translateX(0px) rotate(0deg);
+  }
+  33% {
+    transform: translateY(-22px) translateX(8px) rotate(3deg);
+  }
+  66% {
+    transform: translateY(-12px) translateX(-12px) rotate(-3deg);
+  }
+}
+
+@keyframes float-6 {
+  0%, 100% {
+    transform: translateY(0px) translateX(0px) rotate(0deg);
+  }
+  33% {
+    transform: translateY(-16px) translateX(-10px) rotate(-1deg);
+  }
+  66% {
+    transform: translateY(-26px) translateX(10px) rotate(1deg);
+  }
+}
+
+.animate-float-1 {
+  animation: float-1 8s ease-in-out infinite;
+}
+
+.animate-float-2 {
+  animation: float-2 10s ease-in-out infinite;
+}
+
+.animate-float-3 {
+  animation: float-3 7s ease-in-out infinite;
+}
+
+.animate-float-4 {
+  animation: float-4 9s ease-in-out infinite;
+}
+
+.animate-float-5 {
+  animation: float-5 11s ease-in-out infinite;
+}
+
+.animate-float-6 {
+  animation: float-6 8.5s ease-in-out infinite;
+}
+
+/* Drawer slide-in animation */
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 0.3s ease-out;
+}
+
+/* Bottom sheet animations */
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-slide-up {
+  animation: slideUp 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.2s ease-out;
+}
+
+/* Hide scrollbar for thumbnails */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

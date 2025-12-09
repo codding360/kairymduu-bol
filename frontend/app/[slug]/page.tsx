@@ -1,11 +1,12 @@
 import type {Metadata} from 'next'
-import Head from 'next/head'
 
 import PageBuilderPage from '@/app/components/PageBuilder'
 import {sanityFetch} from '@/sanity/lib/live'
-import {getPageQuery, pagesSlugs} from '@/sanity/lib/queries'
+import {getPageQuery, pagesSlugs, settingsQuery} from '@/sanity/lib/queries'
 import {GetPageQueryResult} from '@/sanity.types'
 import {PageOnboarding} from '@/app/components/Onboarding'
+import Link from 'next/link'
+import { formatWhatsAppLink } from '../lib/format'
 
 type Props = {
   params: Promise<{slug: string}>
@@ -46,7 +47,10 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
 
 export default async function Page(props: Props) {
   const params = await props.params
-  const [{data: page}] = await Promise.all([sanityFetch({query: getPageQuery, params})])
+  const [{data: page}, {data: settings}] = await Promise.all([
+    sanityFetch({query: getPageQuery, params}),
+    sanityFetch({query: settingsQuery})
+  ])
 
   if (!page?._id) {
     return (
@@ -56,26 +60,32 @@ export default async function Page(props: Props) {
     )
   }
 
+
   return (
-    <div className="my-12 lg:my-24">
-      <Head>
-        <title>{page.heading}</title>
-      </Head>
-      <div className="">
-        <div className="container">
-          <div className="pb-6 border-b border-gray-100">
-            <div className="max-w-3xl">
-              <h2 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl lg:text-7xl">
-                {page.heading}
-              </h2>
-              <p className="mt-4 text-base lg:text-lg leading-relaxed text-gray-600 uppercase font-light">
-                {page.subheading}
-              </p>
-            </div>
+    <div className="bg-white min-h-screen">
+      {/* Hero */}
+      <div className="bg-gradient-to-br from-primary-50 to-blue-50 py-16">
+        <div className="container max-w-8xl mx-auto px-4 py-12 text-center">
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+            {page.heading}
+          </h1>
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-8">
+            {page.subheading}
+          </p>
+
+          <div className="flex justify-center items-center gap-4 w-full px-4">
+            <Link
+              href={formatWhatsAppLink(settings?.whatsappPhone as string)}
+              className="rounded-full flex gap-2 items-center justify-center border bg-primary-600 hover:bg-primary-700 py-3 px-6 text-white transition-colors duration-200 font-semibold"
+            >
+              <span className="whitespace-nowrap">Начать сбор ❤️</span>
+            </Link>
           </div>
         </div>
       </div>
-      <PageBuilderPage page={page as GetPageQueryResult} />
+      <div className="container max-w-8xl mx-auto px-4 py-12">
+        {page && page._id && <PageBuilderPage page={page as GetPageQueryResult} />}
+      </div>
     </div>
   )
 }
